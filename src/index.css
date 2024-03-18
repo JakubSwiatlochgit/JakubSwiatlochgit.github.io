@@ -1,0 +1,31 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+body{
+  color: #213547;
+  
+}
+.todo{
+  text-align: left;
+}
+.todo .icons{
+  text-align: right;
+  font-size: 2rem;
+}
+.todo h3 {
+  cursor: pointer;
+}
+
+.todo h3.completed {
+  text-decoration: line-through;
+  text-decoration-color: hsl(0, 48%, 35%);
+  text-decoration-thickness: 4px;
+  
+}
+
+.todo h3.daily {
+  color: hsl(240, 43%, 34%);
+}
