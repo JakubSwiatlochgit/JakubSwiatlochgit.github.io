@@ -23,9 +23,27 @@ body{
   text-decoration: line-through;
   text-decoration-color: hsl(0, 48%, 35%);
   text-decoration-thickness: 4px;
-  
+  background-color: hsl(120, 76%, 69%);
 }
 
-.todo h3.daily {
-  color: hsl(240, 43%, 34%);
+.todo.container.isDaily{
+  background-color: hsl(183, 81%, 83%);
+}
+
+.todo .icons {
+  color: black;
+}
+.todo .icon{
+  cursor: pointer;
+  transition: all 0.5s;
+}
+.todo .icon:hover{
+  cursor: pointer;
+  font-size: 2.5rem;
+}
+.todo .icon-Edit:hover{
+  color: green;
+}
+.todo .icon-Trash:hover{
+  color: red;
 }

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 const TodoForm = ({ addTodo }) => {
   const [value, setValue] = useState("");
   const [isDaily, setIsDaily] = useState(false);
+  const [category, setCategory] = useState("");
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -10,6 +11,7 @@ const TodoForm = ({ addTodo }) => {
     addTodo({
       value,
       isDaily,
+      category
     });
 
     setValue("");
@@ -18,9 +20,9 @@ const TodoForm = ({ addTodo }) => {
 
   return (
     <div className="container">
-      <form className="todoForm " onSubmit={handleSubmit}>
-        <div className="row  d-felx justify-content-center ">
-          <div className="col-12 col-md-6">
+      <form className="todoForm" onSubmit={handleSubmit}>
+        <div className="row justify-content-center">
+          <div className="col-6">
             <input
               type="text"
               className="todoInput form-control"
@@ -29,18 +31,35 @@ const TodoForm = ({ addTodo }) => {
               onChange={(e) => setValue(e.target.value)}
             />
           </div>
-          <div className="col-12 mt-4">
-            <label className="me-5">
-              <span className="me-3">isDaily</span>
-              <input
-                type="checkbox"
-                checked={isDaily}
-                onChange={(e) => setIsDaily(e.target.checked)}
-              />
-            </label>
-            <button type="submit" className="btn btn-primary">
-              Add Task
-            </button>
+          <div className="row">
+            <div className="d-flex align-items-center">
+              <div className="col-4">
+                <input
+                  type="checkbox"
+                  checked={isDaily}
+                  onChange={(e) => setIsDaily(e.target.checked)}
+                />
+                <span className="ms-3 me-5">isDaily</span>
+              </div>
+              <div className="col-4">
+                <select
+                  className="form-select"
+                  aria-label="Select Category"
+                  onChange={(e) => setCategory(e.target.value)}
+                  name="category"
+                >
+                  <option value="">Select Category</option>
+                  <option value="Home">Home</option>
+                  <option value="Outside">Outside</option>
+                  <option value="Pets">Pets</option>
+                </select>
+              </div>
+              <div className="col-4">
+                <button type="submit" className="btn btn-primary">
+                  Add Task
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </form>

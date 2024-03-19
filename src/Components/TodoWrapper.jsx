@@ -5,16 +5,14 @@ import { useState, useEffect } from 'react' // Dodajemy useEffect
 import { v4 as uuidv4 } from 'uuid'
 
 const TodoWrapper = () => {
-  const [todos, setTodos] = useState([
-    
-  ])
+  const [todos, setTodos] = useState([])
   const [daily, setDaily] = useState([])
 
   useEffect(() => {
     const initialTasks = [
-      { id: uuidv4(), desc: "Wstań z łóżka", completed: false, isDaily: true },
-      { id: uuidv4(), desc: "Idź się umyć", completed: false, isDaily: true },
-      { id: uuidv4(), desc: "Wyjdź z domu", completed: false, isDaily: true }
+      { id: uuidv4(), desc: "Wstań z łóżka", completed: false, isDaily: true, category: "Home" },
+      { id: uuidv4(), desc: "Idź się umyć", completed: false, isDaily: false, category: "Home" },
+      { id: uuidv4(), desc: "Wyjdź z domu", completed: false, isDaily: true, category: "Outside" }
     ]
 
     setTodos(initialTasks)
@@ -26,18 +24,20 @@ const TodoWrapper = () => {
       desc: todo.value,
       completed: false,
       isEditing: false, 
-      isDaily: todo.isDaily  // Ustawienie isDaily na wartość z checkboxa
+      isDaily: todo.isDaily,  // isDaily na wartosc z checkboxa,
+      category: todo.category,
     }]);
   }
-  console.log(todos)
   function removeTodo(id) {
     setTodos(todos.filter(todo => todo.id !== id));
+  }
+  function handleEdit(id, newDesc) {
+    setTodos(todos.map(todo => todo.id === id ? { ...todo, desc: newDesc } : todo));
   }
   
   function toggleComplete (id) {
     setTodos(todos.map(todo => todo.id === id ? {
       ...todo, completed: !todo.completed} : todo))
-      console.log(todos)
   }
 
   return (
@@ -48,11 +48,12 @@ const TodoWrapper = () => {
           <h1 className="py-4">Zadania do wykonania:</h1>
           {todos.map((desc,index) => (
             <Todo 
-            task={desc} 
-            key={index} 
-            toggleComplete={toggleComplete} 
-            removeTodo={removeTodo} 
-          />
+              task={desc} 
+              key={index} 
+              toggleComplete={toggleComplete} 
+              removeTodo={removeTodo} 
+              handleEdit={handleEdit}
+            />
           ))}
     
         </div>
