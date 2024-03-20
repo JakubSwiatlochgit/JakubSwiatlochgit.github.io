@@ -6,7 +6,6 @@ import { v4 as uuidv4 } from 'uuid'
 
 const TodoWrapper = () => {
   const [todos, setTodos] = useState([])
-  const [daily, setDaily] = useState([])
 
   useEffect(() => {
     const initialTasks = [

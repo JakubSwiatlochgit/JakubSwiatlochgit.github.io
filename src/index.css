@@ -23,7 +23,6 @@ body{
   text-decoration: line-through;
   text-decoration-color: hsl(0, 48%, 35%);
   text-decoration-thickness: 4px;
-  background-color: hsl(120, 76%, 69%);
 }
 
 .todo.container.isDaily{

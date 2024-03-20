@@ -1,7 +1,7 @@
 import {useState} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
-
+import PropTypes from 'prop-types';
 const Todo = ({ task, toggleComplete, removeTodo, handleEdit }) => {
 
   const [showEdit, setShowEdit] = useState(false)
@@ -23,16 +23,16 @@ const Todo = ({ task, toggleComplete, removeTodo, handleEdit }) => {
   return (
     <div className={containerClass}>
       <div className="row">
-        <div className="col-12 col-md-6 text-center">
+        <div className="col-12 col-md-6 text-center text-break">
           <h3
             onClick={() => toggleComplete(task.id, task.completed)}
             className={`${checkLogic}`}
           >
-            <p className="mb-0">Task:</p>
+            <h2 className="mb-0">Task:</h2>
             
             <p className="lead fw-bold">{task.desc}</p>
            
-            <p className="mt-2 mb-0">Category:</p>
+            <h2 className="mt-2 mb-0">Category:</h2>
             
             <p className="lead fw-bold">{task.category}</p>
           </h3>
@@ -78,6 +78,19 @@ const Todo = ({ task, toggleComplete, removeTodo, handleEdit }) => {
       </div>
     </div>
   );
+};
+
+Todo.propTypes = {
+  task: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    desc: PropTypes.string.isRequired,
+    completed: PropTypes.bool.isRequired,
+    isDaily: PropTypes.bool.isRequired,
+    category: PropTypes.string.isRequired,
+  }).isRequired,
+  toggleComplete: PropTypes.func.isRequired,
+  removeTodo: PropTypes.func.isRequired,
+  handleEdit: PropTypes.func.isRequired,
 };
 
 export default Todo;
