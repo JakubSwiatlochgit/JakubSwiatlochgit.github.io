@@ -28,11 +28,11 @@ const Todo = ({ task, toggleComplete, removeTodo, handleEdit }) => {
             onClick={() => toggleComplete(task.id, task.completed)}
             className={`${checkLogic}`}
           >
-            <h2 className="mb-0">Task:</h2>
+            <p className="mb-0">Task:</p>
             
             <p className="lead fw-bold">{task.desc}</p>
            
-            <h2 className="mt-2 mb-0">Category:</h2>
+            <p className="mt-2 mb-0">Category:</p>
             
             <p className="lead fw-bold">{task.category}</p>
           </h3>

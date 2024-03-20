@@ -9,21 +9,25 @@ const TodoForm = ({ addTodo }) => {
   function handleSubmit(e) {
     e.preventDefault();
 
-    addTodo({
-      value,
-      isDaily,
-      category
-    });
+    const trimmedValueFromMoreSpaces = value.replace(/\s{2,}/g, ' ').trim();
 
-    setValue("");
-    setIsDaily(false);
+    if(trimmedValueFromMoreSpaces.trim().length > 3 && trimmedValueFromMoreSpaces.trim() !== ""){
+      addTodo({
+        value : trimmedValueFromMoreSpaces,
+        isDaily,
+        category
+      });
+  
+      setValue("");
+      setIsDaily(false);
+    }
   }
-
+  console.log(value.length)
   return (
     <div className="container">
       <form className="todoForm" onSubmit={handleSubmit}>
-        <div className="row justify-content-center">
-          <div className="col-6">
+        <div className="row justify-content-center ">
+          <div className="col-12 col-md-6">
             <input
               type="text"
               className="todoInput form-control"
@@ -32,17 +36,18 @@ const TodoForm = ({ addTodo }) => {
               onChange={(e) => setValue(e.target.value)}
             />
           </div>
-          <div className="row">
-            <div className="d-flex align-items-center">
-              <div className="col-4">
+
+          <div className="row mt-2">
+            <div className="d-flex justify-content-between align-items-md-center">
+              <div className="col-3">
                 <input
                   type="checkbox"
                   checked={isDaily}
                   onChange={(e) => setIsDaily(e.target.checked)}
                 />
-                <span className="ms-3 me-5">isDaily</span>
+                <span className="ms-3 me-5 ">isDaily</span>
               </div>
-              <div className="col-4">
+              <div className="col-6">
                 <select
                   className="form-select"
                   aria-label="Select Category"
@@ -55,11 +60,19 @@ const TodoForm = ({ addTodo }) => {
                   <option value="Pets">Pets</option>
                 </select>
               </div>
-              <div className="col-4">
+              <div className="d-none d-md-block col-3 mt-2">
                 <button type="submit" className="btn btn-primary">
                   Add Task
                 </button>
               </div>
+            </div>
+          </div>
+
+          <div className="row d-block d-md-none col-12 mt-2">
+            <div className="">
+              <button type="submit" className="btn btn-primary px-5 py-2">
+                Add Task
+              </button>
             </div>
           </div>
         </div>
