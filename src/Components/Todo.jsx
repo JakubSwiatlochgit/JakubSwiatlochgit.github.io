@@ -1,4 +1,4 @@
-import {useState} from "react";
+import React, {useState} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from 'prop-types';
@@ -28,13 +28,13 @@ const Todo = ({ task, toggleComplete, removeTodo, handleEdit }) => {
             onClick={() => toggleComplete(task.id, task.completed)}
             className={`${checkLogic}`}
           >
-            <p className="mb-0">Task:</p>
+            <p className="mb-0 lead fw-bold">Task:</p>
             
-            <p className="lead fw-bold">{task.desc}</p>
+            <p className="">{task.desc}</p>
            
-            <p className="mt-2 mb-0">Category:</p>
+            <p className="mt-2 mb-0 lead fw-bold" >Category:</p>
             
-            <p className="lead fw-bold">{task.category}</p>
+            <p className="">{task.category}</p>
           </h3>
           
         </div>

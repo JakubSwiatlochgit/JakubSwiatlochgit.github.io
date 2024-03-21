@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 const TodoForm = ({ addTodo }) => {
@@ -61,7 +61,7 @@ const TodoForm = ({ addTodo }) => {
                 </select>
               </div>
               <div className="d-none d-md-block col-3 mt-2">
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
                   Add Task
                 </button>
               </div>

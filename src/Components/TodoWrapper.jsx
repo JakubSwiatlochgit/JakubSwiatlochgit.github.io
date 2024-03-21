@@ -1,3 +1,4 @@
+import React from 'react'; // Dodaj ten import
 import TodoForm from './TodoForm'
 // import EditTodoForm from './EditTodoForm'
 import Todo from './Todo'
@@ -44,7 +45,8 @@ const TodoWrapper = () => {
       <div className="row">
       <TodoForm addTodo={addTodo} />
         <div className="col">
-          <h1 className="py-4">Zadania do wykonania:</h1>
+        <p className="py-4 text-xl font-bold underline">Zadania do wykonania:</p>
+
           {todos.map((desc,index) => (
             <Todo 
               task={desc} 

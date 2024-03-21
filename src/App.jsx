@@ -1,6 +1,7 @@
+import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import './App.css'
 import TodoWrapper from './Components/TodoWrapper.jsx'
+import './App.css'
 function App() {
  
   return (
