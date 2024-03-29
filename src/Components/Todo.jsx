@@ -1,10 +1,10 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
-import PropTypes from 'prop-types';
-const Todo = ({ task, toggleComplete, removeTodo, handleEdit }) => {
+import PropTypes from "prop-types";
 
-  const [showEdit, setShowEdit] = useState(false)
+const Todo = ({ task, toggleComplete, removeTodo, handleEdit }) => {
+  const [showEdit, setShowEdit] = useState(false);
   const [newDesc, setNewDesc] = useState(task.desc);
 
   let checkLogic = `${task.completed ? "completed" : ""} ${
@@ -13,12 +13,11 @@ const Todo = ({ task, toggleComplete, removeTodo, handleEdit }) => {
   let containerClass = task.isDaily
     ? "todo container shadow p-5 isDaily"
     : "todo container shadow p-5";
-   
+
   function showEditFormHandler() {
-    setShowEdit(!showEdit)
-    console.log(showEdit)
+    setShowEdit(!showEdit);
+    console.log(showEdit);
   }
-  
 
   return (
     <div className={containerClass}>
@@ -29,43 +28,43 @@ const Todo = ({ task, toggleComplete, removeTodo, handleEdit }) => {
             className={`${checkLogic}`}
           >
             <p className="mb-0 lead fw-bold">Task:</p>
-            
+
             <p className="">{task.desc}</p>
-           
-            <p className="mt-2 mb-0 lead fw-bold" >Category:</p>
-            
+
+            <p className="mt-2 mb-0 lead fw-bold">Category:</p>
+
             <p className="">{task.category}</p>
           </h3>
-          
         </div>
-        {
-          showEdit && (
-            <div className="container col-12 col-md-6 d-flex align-items-center flex-column justify-content-center text-center">
-              <div className="row">
-                <div className="inputEdit">
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={newDesc}
-                    onChange={(e) => setNewDesc(e.target.value)}
-                  />
-                  <button
+        {showEdit && (
+          <div className="col-12 col-md-6 d-flex align-items-center flex-column justify-content-center text-center mt-md-0 mt-3">
+            <div className="row">
+              <div className="inputEdit">
+                <input
+                  type="text"
+                  className="form-control"
+                  value={newDesc}
+                  onChange={(e) => setNewDesc(e.target.value)}
+                />
+                <button
                   className="btn btn-success mt-3"
                   onClick={() => {
                     handleEdit(task.id, newDesc);
                     setShowEdit(false);
-                  }}> Apply </button>
-                </div>
+                  }}
+                >
+                  Apply
+                </button>
               </div>
             </div>
-          )
-        }
+          </div>
+        )}
         <div className="col-12 mt-4 text-center d-flex justify-content-center align-items-center">
           <div className="icons">
-            <FontAwesomeIcon 
-              icon={faPenToSquare} 
+            <FontAwesomeIcon
+              icon={faPenToSquare}
               className="icon icon-Edit"
-              onClick={() => showEditFormHandler(task.id)} 
+              onClick={() => showEditFormHandler(task.id)}
             />
             <span className="mx-4"></span>
             <FontAwesomeIcon

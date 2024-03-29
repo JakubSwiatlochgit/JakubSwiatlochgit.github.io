@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
+import Button from 'react-bootstrap/Button'
 const TodoForm = ({ addTodo }) => {
   const [value, setValue] = useState("");
   const [isDaily, setIsDaily] = useState(false);
@@ -45,7 +45,8 @@ const TodoForm = ({ addTodo }) => {
                   checked={isDaily}
                   onChange={(e) => setIsDaily(e.target.checked)}
                 />
-                <span className="ms-3 me-5 ">isDaily</span>
+                <span className="ms-3 me-5 d-none">isDaily</span>
+                <span className="mx-md-3 mx-2">isDaily</span>
               </div>
               <div className="col-6">
                 <select
@@ -61,18 +62,27 @@ const TodoForm = ({ addTodo }) => {
                 </select>
               </div>
               <div className="d-none d-md-block col-3 mt-2">
-                <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                
+                <Button
+                  type="submit"
+                  variant="blue" 
+                  className="rounded-full px-4 py-2"
+                >
                   Add Task
-                </button>
+                </Button>
               </div>
             </div>
           </div>
 
           <div className="row d-block d-md-none col-12 mt-2">
             <div className="">
-              <button type="submit" className="btn btn-primary px-5 py-2">
-                Add Task
-              </button>
+              <Button
+                type="submit"
+                variant="purple"
+                size="xxl"
+                className="hover:bg-blue-700 hover:text-white"
+              > Add Task </Button>
+
             </div>
           </div>
         </div>
@@ -84,3 +94,15 @@ TodoForm.propTypes = {
   addTodo: PropTypes.func.isRequired,
 }
 export default TodoForm;
+// <button type="submit" 
+//                   className="
+//                     bg-blue-500 
+//                     hover:bg-blue-700 
+//                     text-white 
+//                     font-bold 
+//                     py-2 
+//                     px-4 
+//                     rounded-full"
+//                   >
+//                   Add Task
+//                 </button>
