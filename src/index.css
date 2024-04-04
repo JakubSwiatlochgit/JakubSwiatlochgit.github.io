@@ -72,3 +72,22 @@ body{
   color: white;
 
 }
+.btn-green{
+  background-color: green;
+  color :#fff;
+  font-weight:  bold;
+}
+.btn-green:hover{
+  background-color: rgb(32, 93, 32);
+  color :#fff;
+  font-weight:  bold;
+}
+.btn-primary {
+  background-color: rgb(59 130 246);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: rgb(22, 107, 245);
+  color: white;
+}

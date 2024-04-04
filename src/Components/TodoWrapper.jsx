@@ -1,22 +1,22 @@
-import React from 'react'; // Dodaj ten import
-import TodoForm from './TodoForm'
-// import EditTodoForm from './EditTodoForm'
-import Todo from './Todo'
-import { useState, useEffect } from 'react' // Dodajemy useEffect
-import { v4 as uuidv4 } from 'uuid'
+import React from 'react';
+import TodoForm from './TodoForm';
+import Todo from './Todo';
+import { useState, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { Container, Row, Col } from 'react-bootstrap'; // Dodajemy importy dla komponentów Bootstrapa
 
 const TodoWrapper = () => {
-  const [todos, setTodos] = useState([])
+  const [todos, setTodos] = useState([]);
 
   useEffect(() => {
     const initialTasks = [
       { id: uuidv4(), desc: "Wstań z łóżka", completed: false, isDaily: true, category: "Home" },
       { id: uuidv4(), desc: "Idź się umyć", completed: false, isDaily: false, category: "Home" },
       { id: uuidv4(), desc: "Wyjdź z domu", completed: false, isDaily: true, category: "Outside" }
-    ]
+    ];
 
-    setTodos(initialTasks)
-  }, []) 
+    setTodos(initialTasks);
+  }, []);
 
   function addTodo(todo) {
     setTodos([...todos, {
@@ -24,29 +24,29 @@ const TodoWrapper = () => {
       desc: todo.value,
       completed: false,
       isEditing: false, 
-      isDaily: todo.isDaily,  // isDaily na wartosc z checkboxa,
+      isDaily: todo.isDaily,
       category: todo.category,
     }]);
   }
+  
   function removeTodo(id) {
     setTodos(todos.filter(todo => todo.id !== id));
   }
+  
   function handleEdit(id, newDesc) {
     setTodos(todos.map(todo => todo.id === id ? { ...todo, desc: newDesc } : todo));
   }
   
-  function toggleComplete (id) {
-    setTodos(todos.map(todo => todo.id === id ? {
-      ...todo, completed: !todo.completed} : todo))
+  function toggleComplete(id) {
+    setTodos(todos.map(todo => todo.id === id ? { ...todo, completed: !todo.completed } : todo));
   }
 
   return (
-    <div className="container shadow p-5" >
-      <div className="row">
-      <TodoForm addTodo={addTodo} />
-        <div className="col">
-        <p className="py-4 text-xl font-bold underline">Zadania do wykonania:</p>
-
+    <Container fluid className="shadow p-5">
+      <Row>
+        <Col>
+          <TodoForm addTodo={addTodo} />
+          <p className="py-4 text-xl font-bold underline">Zadania do wykonania:</p>
           {todos.map((desc,index) => (
             <Todo 
               task={desc} 
@@ -56,13 +56,10 @@ const TodoWrapper = () => {
               handleEdit={handleEdit}
             />
           ))}
-    
-        </div>
+        </Col>
+      </Row>
+    </Container>
+  );
+};
 
-        
-      </div>
-    </div>
-  )
-}
-
-export default TodoWrapper
+export default TodoWrapper;

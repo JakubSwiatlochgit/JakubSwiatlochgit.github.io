@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
+import { Button, Container, Row, Col } from 'react-bootstrap';
 
 const Todo = ({ task, toggleComplete, removeTodo, handleEdit }) => {
   const [showEdit, setShowEdit] = useState(false);
@@ -20,9 +21,9 @@ const Todo = ({ task, toggleComplete, removeTodo, handleEdit }) => {
   }
 
   return (
-    <div className={containerClass}>
-      <div className="row">
-        <div className="col-12 col-md-6 text-center text-break">
+    <Container className={containerClass}>
+      <Row>
+        <Col xl={12} md={6} className="text-center text-break">
           <h3
             onClick={() => toggleComplete(task.id, task.completed)}
             className={`${checkLogic}`}
@@ -35,10 +36,10 @@ const Todo = ({ task, toggleComplete, removeTodo, handleEdit }) => {
 
             <p className="">{task.category}</p>
           </h3>
-        </div>
+        </Col>
         {showEdit && (
-          <div className="col-12 col-md-6 d-flex align-items-center flex-column justify-content-center text-center mt-md-0 mt-3">
-            <div className="row">
+          <Col sm={12} md={6} className="d-flex align-items-center flex-column justify-content-center text-center mt-md-0 mt-3">
+            <Row>
               <div className="inputEdit">
                 <input
                   type="text"
@@ -46,20 +47,22 @@ const Todo = ({ task, toggleComplete, removeTodo, handleEdit }) => {
                   value={newDesc}
                   onChange={(e) => setNewDesc(e.target.value)}
                 />
-                <button
-                  className="btn btn-success mt-3"
+                <Button
+                  type="submit"
+                  variant="green" 
+                  className="rounded-full px-4 py-2"
                   onClick={() => {
                     handleEdit(task.id, newDesc);
                     setShowEdit(false);
                   }}
                 >
                   Apply
-                </button>
+                </Button>
               </div>
-            </div>
-          </div>
+            </Row>
+          </Col>
         )}
-        <div className="col-12 mt-4 text-center d-flex justify-content-center align-items-center">
+        <Col sm={12} className="mt-4 text-center d-flex justify-content-center align-items-center">
           <div className="icons">
             <FontAwesomeIcon
               icon={faPenToSquare}
@@ -73,9 +76,9 @@ const Todo = ({ task, toggleComplete, removeTodo, handleEdit }) => {
               className="icon icon-Trash"
             />
           </div>
-        </div>
-      </div>
-    </div>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
