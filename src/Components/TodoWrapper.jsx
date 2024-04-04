@@ -1,4 +1,3 @@
-import React from 'react';
 import TodoForm from './TodoForm';
 import Todo from './Todo';
 import { useState, useEffect } from 'react';
