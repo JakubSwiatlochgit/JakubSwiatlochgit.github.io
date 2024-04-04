@@ -23,7 +23,7 @@ const Todo = ({ task, toggleComplete, removeTodo, handleEdit }) => {
   return (
     <Container className={containerClass}>
       <Row>
-        <Col xl={12} md={6} className="text-center text-break">
+        <Col xs={12} md={6} className="text-center text-break">
           <h3
             onClick={() => toggleComplete(task.id, task.completed)}
             className={`${checkLogic}`}

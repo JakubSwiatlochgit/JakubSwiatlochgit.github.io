@@ -21,7 +21,7 @@ const TodoForm = ({ addTodo }) => {
   
       setValue("");
       setIsDaily(false);
-    }
+    } 
   }
 
   return (
