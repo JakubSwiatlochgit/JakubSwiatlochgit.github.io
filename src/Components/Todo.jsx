@@ -50,7 +50,7 @@ const Todo = ({ task, toggleComplete, removeTodo, handleEdit }) => {
                 <Button
                   type="submit"
                   variant="green" 
-                  className="rounded-full px-4 py-2"
+                  className="rounded-full px-4 py-2 mt-3"
                   onClick={() => {
                     handleEdit(task.id, newDesc);
                     setShowEdit(false);
