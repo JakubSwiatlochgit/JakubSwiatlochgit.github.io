@@ -65,7 +65,7 @@ const TodoForm = ({ addTodo }) => {
             </Row>
             <Row className="d-block d-md-none mt-2">
               <Col xs={12}>
-                <Button type="submit" variant="primary" size="lg" className="rounded-full px-4 py-2">
+                <Button type="submit" variant="primary" size="lg" className="rounded-full px-3 py-2">
                   Add Task
                 </Button>
               </Col>
