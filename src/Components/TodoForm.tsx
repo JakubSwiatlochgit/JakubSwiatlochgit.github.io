@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import { Button, Form, Container, Row, Col } from 'react-bootstrap';
+import { TodoFormProps } from './../Interfaces/Interfaces';
 
-const TodoForm = ({ addTodo }) => {
+const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
   const [value, setValue] = useState("");
   const [isDaily, setIsDaily] = useState(false);
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState("notcategorized");
 
-  function handleSubmit(e) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const trimmedValueFromMoreSpaces = value.replace(/\s{2,}/g, ' ').trim();
@@ -21,6 +21,7 @@ const TodoForm = ({ addTodo }) => {
   
       setValue("");
       setIsDaily(false);
+      setCategory("notcategorized");
     } 
   }
 
@@ -76,9 +77,5 @@ const TodoForm = ({ addTodo }) => {
     </Container>
   );
 };
-
-TodoForm.propTypes = {
-  addTodo: PropTypes.func.isRequired,
-}
 
 export default TodoForm;

@@ -1,14 +1,15 @@
+import React, { useState, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { Container, Row, Col } from 'react-bootstrap';
 import TodoForm from './TodoForm';
 import Todo from './Todo';
-import { useState, useEffect } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import { Container, Row, Col } from 'react-bootstrap'; // Dodajemy importy dla komponentów Bootstrapa
+import { TodoItem } from './../Interfaces/Interfaces';
 
 const TodoWrapper = () => {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState<TodoItem[]>([]);
 
   useEffect(() => {
-    const initialTasks = [
+    const initialTasks: TodoItem[] = [
       { id: uuidv4(), desc: "Wstań z łóżka", completed: false, isDaily: true, category: "Home" },
       { id: uuidv4(), desc: "Idź się umyć", completed: false, isDaily: false, category: "Home" },
       { id: uuidv4(), desc: "Wyjdź z domu", completed: false, isDaily: true, category: "Outside" }
@@ -17,26 +18,25 @@ const TodoWrapper = () => {
     setTodos(initialTasks);
   }, []);
 
-  function addTodo(todo) {
+  function addTodo(todo: { value: string; isDaily: boolean; category: string }) {
     setTodos([...todos, {
       id: uuidv4(),
       desc: todo.value,
       completed: false,
-      isEditing: false, 
       isDaily: todo.isDaily,
       category: todo.category,
     }]);
   }
   
-  function removeTodo(id) {
+  function removeTodo(id: string) {
     setTodos(todos.filter(todo => todo.id !== id));
   }
   
-  function handleEdit(id, newDesc) {
+  function handleEdit(id: string, newDesc: string) {
     setTodos(todos.map(todo => todo.id === id ? { ...todo, desc: newDesc } : todo));
   }
   
-  function toggleComplete(id) {
+  function toggleComplete(id: string) {
     setTodos(todos.map(todo => todo.id === id ? { ...todo, completed: !todo.completed } : todo));
   }
 
@@ -46,9 +46,9 @@ const TodoWrapper = () => {
         <Col>
           <TodoForm addTodo={addTodo} />
           <p className="py-4 text-xl font-bold underline">Zadania do wykonania:</p>
-          {todos.map((desc,index) => (
+          {todos.map((task, index) => (
             <Todo 
-              task={desc} 
+              task={task} 
               key={index} 
               toggleComplete={toggleComplete} 
               removeTodo={removeTodo} 
