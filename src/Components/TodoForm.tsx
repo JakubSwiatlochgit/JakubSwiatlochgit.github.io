@@ -4,7 +4,7 @@ import { TodoFormProps } from './../Interfaces/Interfaces';
 
 const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
   const [value, setValue] = useState("");
-  const [isDaily, setIsDaily] = useState(false);
+  const [isDaily, setIsDaily] = useState<boolean>(false);
   const [category, setCategory] = useState("notcategorized");
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {

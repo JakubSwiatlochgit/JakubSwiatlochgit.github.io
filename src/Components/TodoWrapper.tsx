@@ -48,8 +48,8 @@ const TodoWrapper = () => {
           <p className="py-4 text-xl font-bold underline">Zadania do wykonania:</p>
           {todos.map((task, index) => (
             <Todo 
-              task={task} 
               key={index} 
+              task={task} 
               toggleComplete={toggleComplete} 
               removeTodo={removeTodo} 
               handleEdit={handleEdit}
