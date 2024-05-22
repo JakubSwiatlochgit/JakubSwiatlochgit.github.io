@@ -68,9 +68,12 @@ app.delete("/deleteTask/:id", async (req, res) => {
 
 app.put("/updateTask/:id", async (req, res) => {
   try {
+    console.log(req)
     const { id } = req.params;
     const { desc } = req.body;
+    console.log(id, desc)
     const updatedTask = await TaskModel.findByIdAndUpdate(id, { desc }, { new: true });
+    console.log(updatedTask)
     res.status(200).json(updatedTask);
   } catch (error) {
     res.status(500).json({ error: error.message });

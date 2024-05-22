@@ -39,7 +39,8 @@ const TodoWrapper = () => {
   }
   
   function handleEdit(id: string, newDesc: string) {
-    axios.put(`http://localhost:3001/updateTask/${id}`, { task: newDesc })
+    console.log(id)
+    axios.put(`http://localhost:3001/updateTask/${id}`, { desc: newDesc }) // Zmieniono nazwę pola na "desc"
       .then(() => {
         setTodos(todos.map(todo => todo.id === id ? { ...todo, desc: newDesc } : todo));
       })
@@ -47,6 +48,7 @@ const TodoWrapper = () => {
         console.error("Błąd podczas edycji zadania:", error);
       });
   }
+  
 
   
   function toggleComplete(id: string) {
@@ -61,6 +63,7 @@ const TodoWrapper = () => {
         <p className="py-4 text-xl font-bold underline">Zadania do wykonania:</p>
         {todos.map((task) => (
           <Todo
+
             key={task._id}
             task={task}
             toggleComplete={toggleComplete}
