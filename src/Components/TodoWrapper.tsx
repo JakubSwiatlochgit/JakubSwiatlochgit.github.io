@@ -1,64 +1,77 @@
 import React, { useState, useEffect } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { Container, Row, Col } from 'react-bootstrap';
 import TodoForm from './TodoForm';
 import Todo from './Todo';
+import axios from 'axios';
 import { TodoItem } from './../Interfaces/Interfaces';
+import { v4 as uuidv4 } from 'uuid'; // import uuid
 
 const TodoWrapper = () => {
   const [todos, setTodos] = useState<TodoItem[]>([]);
 
   useEffect(() => {
-    const initialTasks: TodoItem[] = [
-      { id: uuidv4(), desc: "Wstań z łóżka", completed: false, isDaily: true, category: "Home" },
-      { id: uuidv4(), desc: "Idź się umyć", completed: false, isDaily: false, category: "Home" },
-      { id: uuidv4(), desc: "Wyjdź z domu", completed: false, isDaily: true, category: "Outside" }
-    ];
-
-    setTodos(initialTasks);
+    axios.get("http://localhost:3001/getTasks")
+      .then(response => {
+        setTodos(response.data);
+        console.log("Pobrane zadania:", response.data);
+      })
+      .catch(error => {
+        console.error("Błąd podczas pobierania zadań:", error);
+      });
   }, []);
+  
 
   function addTodo(todo: { value: string; isDaily: boolean; category: string }) {
-    setTodos([...todos, {
-      id: uuidv4(),
-      desc: todo.value,
-      completed: false,
-      isDaily: todo.isDaily,
-      category: todo.category,
-    }]);
+    // Funkcja dodająca zadanie już nie potrzebuje manipulować stanem lokalnym, 
+    // ponieważ po dodaniu zadania z serwera zostanie ono automatycznie dodane do listy zadań.
+    // Dlatego usuwamy logikę dodawania zadania tutaj.
   }
   
   function removeTodo(id: string) {
-    setTodos(todos.filter(todo => todo.id !== id));
+    console.log(id)
+    axios.delete(`http://localhost:3001/deleteTask/${id}`)
+      .then(() => {
+        setTodos(todos.filter(todo => todo.id !== id));
+      })
+      .catch(error => {
+        console.error("Błąd podczas usuwania zadania:", error);
+      });
   }
   
   function handleEdit(id: string, newDesc: string) {
-    setTodos(todos.map(todo => todo.id === id ? { ...todo, desc: newDesc } : todo));
+    axios.put(`http://localhost:3001/updateTask/${id}`, { task: newDesc })
+      .then(() => {
+        setTodos(todos.map(todo => todo.id === id ? { ...todo, desc: newDesc } : todo));
+      })
+      .catch(error => {
+        console.error("Błąd podczas edycji zadania:", error);
+      });
   }
+
   
   function toggleComplete(id: string) {
     setTodos(todos.map(todo => todo.id === id ? { ...todo, completed: !todo.completed } : todo));
   }
 
   return (
-    <Container fluid className="shadow p-5">
-      <Row>
-        <Col>
-          <TodoForm addTodo={addTodo} />
-          <p className="py-4 text-xl font-bold underline">Zadania do wykonania:</p>
-          {todos.map((task, index) => (
-            <Todo 
-              key={index} 
-              task={task} 
-              toggleComplete={toggleComplete} 
-              removeTodo={removeTodo} 
-              handleEdit={handleEdit}
-            />
-          ))}
-        </Col>
-      </Row>
-    </Container>
-  );
+  <Container fluid className="shadow p-5">
+    <Row>
+      <Col>
+        <TodoForm addTodo={addTodo} />
+        <p className="py-4 text-xl font-bold underline">Zadania do wykonania:</p>
+        {todos.map((task) => (
+          <Todo
+            key={task._id}
+            task={task}
+            toggleComplete={toggleComplete}
+            removeTodo={removeTodo}
+            handleEdit={handleEdit}
+          />
+        ))}
+      </Col>
+    </Row>
+  </Container>
+);
 };
 
 export default TodoWrapper;

@@ -72,7 +72,9 @@ const Todo: React.FC<TodoProps> = ({ task, toggleComplete, removeTodo, handleEdi
             <span className="mx-4"></span>
             <FontAwesomeIcon
               icon={faTrash}
-              onClick={() => removeTodo(task.id)}
+              onClick={() => {
+                removeTodo(task._id)
+              }}
               className="icon icon-Trash"
             />
           </div>

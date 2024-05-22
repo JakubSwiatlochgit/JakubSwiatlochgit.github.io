@@ -11,14 +11,32 @@ app.use(json()); // Dodaj obsługę JSON w zapytaniach
 connect("mongodb://localhost:27017/TodoList");
 
 const TaskSchema = new Schema({
-  task: String,
+  desc: String,
+  isDaily: Boolean,
+  category: String,
 });
 
 const TaskModel = model("tasks", TaskSchema);
 
+// // Utwórz przykładowe zadania
+// const initialTasks = [
+//   { desc: "Wstań z łóżka", isDaily: true, category: "Home" },
+//   { desc: "Idź się umyć", isDaily: false, category: "Home" },
+//   { desc: "Wyjdź z domu", isDaily: true, category: "Outside" },
+//   { desc: "Wyjdź na spacer z psem", isDaily: true, category: "Pets" },
+// ];
+
+// // Wstaw przykładowe zadania do bazy danych
+// TaskModel.insertMany(initialTasks)
+//   .then(() => {
+//     console.log("Przykładowe zadania zostały dodane do bazy danych.");
+//   })
+//   .catch((error) => {
+//     console.error("Błąd podczas dodawania przykładowych zadań:", error);
+//   });
+
 app.get("/getTasks", async (req, res) => {
   try {
-    console.log("elo1")
     const tasks = await TaskModel.find().exec();
     res.json(tasks);
   } catch (error) {
@@ -28,14 +46,15 @@ app.get("/getTasks", async (req, res) => {
 
 app.post("/addTask", async (req, res) => {
   try {
-    const { task, isDaily, category } = req.body;
-    const newTask = new TaskModel({ task, isDaily, category });
+    const { desc, isDaily, category } = req.body;
+    const newTask = new TaskModel({ desc, isDaily, category });
     await newTask.save();
     res.status(201).json(newTask);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
+
 
 app.delete("/deleteTask/:id", async (req, res) => {
   try {
@@ -50,8 +69,8 @@ app.delete("/deleteTask/:id", async (req, res) => {
 app.put("/updateTask/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { task } = req.body;
-    const updatedTask = await TaskModel.findByIdAndUpdate(id, { task }, { new: true });
+    const { desc } = req.body;
+    const updatedTask = await TaskModel.findByIdAndUpdate(id, { desc }, { new: true });
     res.status(200).json(updatedTask);
   } catch (error) {
     res.status(500).json({ error: error.message });

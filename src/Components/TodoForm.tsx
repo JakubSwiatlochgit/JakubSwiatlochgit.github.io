@@ -1,4 +1,6 @@
+// Kod dla komponentu TodoForm
 import React, { useState } from 'react';
+import axios from 'axios';
 import { Button, Form, Container, Row, Col } from 'react-bootstrap';
 import { TodoFormProps } from './../Interfaces/Interfaces';
 
@@ -8,22 +10,36 @@ const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
   const [category, setCategory] = useState("notcategorized");
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  e.preventDefault();
 
-    const trimmedValueFromMoreSpaces = value.replace(/\s{2,}/g, ' ').trim();
+  const trimmedValueFromMoreSpaces = value.replace(/\s{2,}/g, ' ').trim();
+  console.log(trimmedValueFromMoreSpaces); // Dodaj console.log tutaj
 
-    if(trimmedValueFromMoreSpaces.trim().length > 3 && trimmedValueFromMoreSpaces.trim() !== ""){
+  if(trimmedValueFromMoreSpaces.trim().length > 3 && trimmedValueFromMoreSpaces.trim() !== ""){
+    axios.post("http://localhost:3001/addTask", {
+      desc: trimmedValueFromMoreSpaces,
+      isDaily,
+      category
+    })
+    .then(response => {
+      console.log(response.data.desc);
       addTodo({
-        value : trimmedValueFromMoreSpaces,
+        _id: response.data._id,
+        desc: trimmedValueFromMoreSpaces,
+        completed: false,
         isDaily,
         category
       });
-  
       setValue("");
       setIsDaily(false);
       setCategory("notcategorized");
-    } 
-  }
+    })
+    .catch(error => {
+      console.error("Błąd podczas dodawania zadania:", error);
+    });
+  } 
+}
+
 
   return (
     <Container>
