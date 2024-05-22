@@ -22,9 +22,7 @@ const TodoWrapper = () => {
   
 
   function addTodo(todo: { value: string; isDaily: boolean; category: string }) {
-    // Funkcja dodająca zadanie już nie potrzebuje manipulować stanem lokalnym, 
-    // ponieważ po dodaniu zadania z serwera zostanie ono automatycznie dodane do listy zadań.
-    // Dlatego usuwamy logikę dodawania zadania tutaj.
+    //manipulacja stanem lokalnym
   }
   
   function removeTodo(id: string) {
@@ -40,8 +38,8 @@ const TodoWrapper = () => {
   
   function handleEdit(id: string, newDesc: string) {
     console.log(id)
-    axios.put(`http://localhost:3001/updateTask/${id}`, { desc: newDesc }) // Zmieniono nazwę pola na "desc"
-      .then(() => {
+    axios.put(`http://localhost:3001/updateTask/${id}`, { desc: newDesc }) 
+    .then(() => {
         setTodos(todos.map(todo => todo.id === id ? { ...todo, desc: newDesc } : todo));
       })
       .catch(error => {

@@ -13,8 +13,8 @@ const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
   e.preventDefault();
 
   const trimmedValueFromMoreSpaces = value.replace(/\s{2,}/g, ' ').trim();
-  console.log(trimmedValueFromMoreSpaces); // Dodaj console.log tutaj
-
+  console.log(trimmedValueFromMoreSpaces);
+  
   if(trimmedValueFromMoreSpaces.trim().length > 3 && trimmedValueFromMoreSpaces.trim() !== ""){
     axios.post("http://localhost:3001/addTask", {
       desc: trimmedValueFromMoreSpaces,
