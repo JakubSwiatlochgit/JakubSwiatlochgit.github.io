@@ -1,45 +1,30 @@
-// Kod dla komponentu TodoForm
+// src/components/TodoForm.js
 import React, { useState } from 'react';
-import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { addTodo } from '../redux/todosSlice.tsx';
 import { Button, Form, Container, Row, Col } from 'react-bootstrap';
-import { TodoFormProps } from './../Interfaces/Interfaces';
+import { ThunkDispatch } from '@reduxjs/toolkit';
 
-const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
+const TodoForm = () => {
   const [value, setValue] = useState("");
-  const [isDaily, setIsDaily] = useState<boolean>(false);
+  const [isDaily, setIsDaily] = useState(false);
   const [category, setCategory] = useState("notcategorized");
+  const dispatch = useDispatch<ThunkDispatch<any,any,any>>();
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-  e.preventDefault();
-
-  const trimmedValueFromMoreSpaces = value.replace(/\s{2,}/g, ' ').trim();
-  console.log(trimmedValueFromMoreSpaces);
-  
-  if(trimmedValueFromMoreSpaces.trim().length > 3 && trimmedValueFromMoreSpaces.trim() !== ""){
-    axios.post("http://localhost:3001/addTask", {
-      desc: trimmedValueFromMoreSpaces,
-      isDaily,
-      category
-    })
-    .then(response => {
-      console.log(response.data.desc);
-      addTodo({
-        _id: response.data._id,
-        desc: trimmedValueFromMoreSpaces,
-        completed: false,
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const trimmedValue = value.trim();
+    if (trimmedValue.length > 3) {
+      dispatch(addTodo({
+        desc: trimmedValue,
         isDaily,
         category
-      });
+      }));
       setValue("");
       setIsDaily(false);
       setCategory("notcategorized");
-    })
-    .catch(error => {
-      console.error("Błąd podczas dodawania zadania:", error);
-    });
-  } 
-}
-
+    }
+  };
 
   return (
     <Container>
@@ -65,24 +50,17 @@ const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
               <Col xs={8} md={9}>
                 <Form.Select
                   aria-label="Select Category"
+                  value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  name="category"
                 >
-                  <option value="">Select Category</option>
+                  <option value="notcategorized">Select Category</option>
                   <option value="Home">Home</option>
                   <option value="Outside">Outside</option>
                   <option value="Pets">Pets</option>
                 </Form.Select>
               </Col>
-              <Col xs={3} md={12} className="mt-2 d-none d-md-block">
+              <Col xs={12} className="mt-2 d-flex justify-content-center">
                 <Button type="submit" variant="primary" className="rounded-full px-4 py-2">
-                  Add Task
-                </Button>
-              </Col>
-            </Row>
-            <Row className="d-block d-md-none mt-2">
-              <Col xs={12}>
-                <Button type="submit" variant="primary" size="lg" className="rounded-full px-3 py-2">
                   Add Task
                 </Button>
               </Col>

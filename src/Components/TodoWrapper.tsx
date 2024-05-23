@@ -1,78 +1,55 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+// src/components/TodoWrapper.js
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchTodos, addTodo, deleteTodo, updateTodo } from '../redux/todosSlice';
 import TodoForm from './TodoForm';
 import Todo from './Todo';
-import axios from 'axios';
-import { TodoItem } from './../Interfaces/Interfaces';
-import { v4 as uuidv4 } from 'uuid'; // import uuid
-
+import { Container, Row, Col } from 'react-bootstrap';
+import { ThunkDispatch } from '@reduxjs/toolkit';
 const TodoWrapper = () => {
-  const [todos, setTodos] = useState<TodoItem[]>([]);
+  const dispatch = useDispatch<ThunkDispatch<any,any,any>>();
+  const todos = useSelector(state => state.todos);
 
   useEffect(() => {
-    axios.get("http://localhost:3001/getTasks")
-      .then(response => {
-        setTodos(response.data);
-        console.log("Pobrane zadania:", response.data);
-      })
-      .catch(error => {
-        console.error("Błąd podczas pobierania zadań:", error);
-      });
-  }, []);
-  
+    dispatch(fetchTodos());
+  }, [dispatch]);
 
-  function addTodo(todo: { value: string; isDaily: boolean; category: string }) {
-    //manipulacja stanem lokalnym
-  }
-  
-  function removeTodo(id: string) {
-    console.log(id)
-    axios.delete(`http://localhost:3001/deleteTask/${id}`)
-      .then(() => {
-        setTodos(todos.filter(todo => todo.id !== id));
-      })
-      .catch(error => {
-        console.error("Błąd podczas usuwania zadania:", error);
-      });
-  }
-  
-  function handleEdit(id: string, newDesc: string) {
-    console.log(id)
-    axios.put(`http://localhost:3001/updateTask/${id}`, { desc: newDesc }) 
-    .then(() => {
-        setTodos(todos.map(todo => todo.id === id ? { ...todo, desc: newDesc } : todo));
-      })
-      .catch(error => {
-        console.error("Błąd podczas edycji zadania:", error);
-      });
-  }
-  
+  const handleAddTodo = (newTodo) => {
+    dispatch(addTodo(newTodo));
+  };
 
-  
-  function toggleComplete(id: string) {
-    setTodos(todos.map(todo => todo.id === id ? { ...todo, completed: !todo.completed } : todo));
-  }
+  const handleDeleteTodo = (id) => {
+    dispatch(deleteTodo(id));
+  };
+
+  const handleUpdateTodo = (id, newDesc) => {
+    dispatch(updateTodo({ id, desc: newDesc }));
+  };
+
+  const toggleComplete = (id) => {
+    const todo = todos.find(todo => todo._id === id);
+    dispatch(updateTodo({ id, desc: todo.desc, completed: !todo.completed }));
+  };
 
   return (
-  <Container fluid className="shadow p-5">
-    <Row>
-      <Col>
-        <TodoForm addTodo={addTodo} />
-        <p className="py-4 text-xl font-bold underline">Zadania do wykonania:</p>
-        {todos.map((task) => (
-          <Todo
-
-            key={task._id}
-            task={task}
-            toggleComplete={toggleComplete}
-            removeTodo={removeTodo}
-            handleEdit={handleEdit}
-          />
-        ))}
-      </Col>
-    </Row>
-  </Container>
-);
+    <Container fluid className="shadow p-5">
+      <Row>
+        <Col>
+          <TodoForm addTodo={handleAddTodo} />
+          <p className="py-4 text-xl font-bold underline">Zadania do wykonania:</p>
+          {todos.map((task) => (
+            <Todo
+              key={task._id}
+              task={task}
+              toggleComplete={toggleComplete}
+              removeTodo={handleDeleteTodo}
+              handleEdit={handleUpdateTodo}
+            />
+          ))}
+        </Col>
+      </Row>
+    </Container>
+  );
 };
 
 export default TodoWrapper;
