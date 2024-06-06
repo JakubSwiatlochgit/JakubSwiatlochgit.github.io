@@ -14,6 +14,7 @@ const TaskSchema = new Schema({
   desc: String,
   isDaily: Boolean,
   category: String,
+  completed: Boolean,
 });
 
 const TaskModel = model("tasks", TaskSchema);
@@ -46,14 +47,17 @@ app.get("/getTasks", async (req, res) => {
 
 app.post("/addTask", async (req, res) => {
   try {
-    const { desc, isDaily, category } = req.body;
-    const newTask = new TaskModel({ desc, isDaily, category });
+    const { desc, isDaily, category, completed } = req.body;
+    console.log(desc, isDaily, category, completed);
+    const newTask = new TaskModel({ desc, isDaily, category, completed });
+
     await newTask.save();
     res.status(201).json(newTask);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
+
 
 
 app.delete("/deleteTask/:id", async (req, res) => {
@@ -68,12 +72,9 @@ app.delete("/deleteTask/:id", async (req, res) => {
 
 app.put("/updateTask/:id", async (req, res) => {
   try {
-    console.log(req)
     const { id } = req.params;
-    const { desc } = req.body;
-    console.log(id, desc)
-    const updatedTask = await TaskModel.findByIdAndUpdate(id, { desc }, { new: true });
-    console.log(updatedTask)
+    const { desc, completed } = req.body; // Dodaj completed z żądania
+    const updatedTask = await TaskModel.findByIdAndUpdate(id, { desc, completed }, { new: true });
     res.status(200).json(updatedTask);
   } catch (error) {
     res.status(500).json({ error: error.message });

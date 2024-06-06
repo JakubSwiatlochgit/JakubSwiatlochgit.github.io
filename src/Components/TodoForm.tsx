@@ -1,4 +1,3 @@
-// src/components/TodoForm.js
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addTodo } from '../redux/todosSlice.tsx';
@@ -9,22 +8,33 @@ const TodoForm = () => {
   const [value, setValue] = useState("");
   const [isDaily, setIsDaily] = useState(false);
   const [category, setCategory] = useState("notcategorized");
+  const [completed, setCompleted] = useState(false);
   const dispatch = useDispatch<ThunkDispatch<any,any,any>>();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const trimmedValue = value.trim();
+    console.log("Dane do przesłania:", {
+      desc: trimmedValue,
+      isDaily,
+      category,
+      completed: false, // Upewnij się, że completed jest ustawione na false
+    }); 
     if (trimmedValue.length > 3) {
       dispatch(addTodo({
         desc: trimmedValue,
         isDaily,
-        category
+        category,
+        completed: false, 
       }));
       setValue("");
       setIsDaily(false);
       setCategory("notcategorized");
+      setCompleted(false);
     }
   };
+  
+  
 
   return (
     <Container>

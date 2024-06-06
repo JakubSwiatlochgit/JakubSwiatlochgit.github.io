@@ -11,6 +11,7 @@ const Todo: React.FC<TodoProps> = ({ task, toggleComplete, removeTodo, handleEdi
   let checkLogic = `${task.completed ? "completed" : ""} ${
     task.isDaily ? "daily" : ""
   }`;
+  console.log("Task Completed info: ", task.completed)
   let containerClass = task.isDaily
     ? "todo container shadow p-5 isDaily"
     : "todo container shadow p-5";
@@ -25,12 +26,14 @@ const Todo: React.FC<TodoProps> = ({ task, toggleComplete, removeTodo, handleEdi
       <Row>
         <Col xs={12} md={6} className="text-center text-break">
           <h3
-            onClick={() => toggleComplete(task.id)}
+            onClick={() => toggleComplete(task._id, task.completed)}
             className={`${checkLogic}`}
+            
           >
+            
             <p className="mb-0 lead fw-bold">Task:</p>
 
-            <p className="">{task.desc}</p>
+            <p className="">{task.desc}, {task.completed}</p>
 
             <p className="mt-2 mb-0 lead fw-bold">Category:</p>
 

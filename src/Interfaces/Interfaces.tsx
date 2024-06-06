@@ -13,7 +13,7 @@ export interface TodoFormProps {
 
 export interface TodoProps {
   task: TodoItem;
-  toggleComplete: (id: string) => void;
+  toggleComplete: (id: string, completed: boolean) => void;
   removeTodo: (id: string) => void;
   handleEdit: (id: string, newDesc: string) => void;
 }

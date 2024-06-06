@@ -19,8 +19,9 @@ export const fetchTodos = createAsyncThunk<Todo[]>('todos/fetchTodos', async () 
 });
 
 export const addTodo = createAsyncThunk<Todo, Partial<Todo>>('todos/addTodo', async (newTodo) => {
-  const response = await axios.post('http://localhost:3001/addTask', newTodo);
-  return response.data;
+  const todoToAdd = { ...newTodo, completed: false }; // Dodaj completed jako domyślną wartość
+  const response = await axios.post('http://localhost:3001/addTask', todoToAdd);
+  return response.data; // Zwróć pełną odpowiedź z serwera
 });
 
 export const deleteTodo = createAsyncThunk<string, string>('todos/deleteTodo', async (id) => {
@@ -56,7 +57,9 @@ const todosSlice = createSlice({
         if (index !== -1) {
           state[index] = action.payload;
         }
-      });
+      })
+
+      
   },
 });
 
